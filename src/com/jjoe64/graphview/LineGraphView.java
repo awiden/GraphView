@@ -25,18 +25,18 @@ public class LineGraphView extends GraphView {
 	}
 
 	@Override
-	public void drawSeries(Canvas canvas, GraphViewData[] values, float graphwidth, float graphheight, float border, double minX, double minY, double diffX, double diffY, float horstart) {
+	public void drawSeries(Canvas canvas, double[][] values, float graphwidth, float graphheight, float border, double minX, double minY, double diffX, double diffY, float horstart) {
 		// draw background
 		double lastEndY = 0;
 		double lastEndX = 0;
 		if (drawBackground) {
 			float startY = graphheight + border;
 			for (int i = 0; i < values.length; i++) {
-				double valY = values[i].valueY - minY;
+				double valY = values[i][1] - minY;
 				double ratY = valY / diffY;
 				double y = graphheight * ratY;
 
-				double valX = values[i].valueX - minX;
+				double valX = values[i][0] - minX;
 				double ratX = valX / diffX;
 				double x = graphwidth * ratX;
 
@@ -69,11 +69,11 @@ public class LineGraphView extends GraphView {
 		lastEndY = 0;
 		lastEndX = 0;
 		for (int i = 0; i < values.length; i++) {
-			double valY = values[i].valueY - minY;
+			double valY = values[i][1] - minY;
 			double ratY = valY / diffY;
 			double y = graphheight * ratY;
 
-			double valX = values[i].valueX - minX;
+			double valX = values[i][0] - minX;
 			double ratX = valX / diffX;
 			double x = graphwidth * ratX;
 
