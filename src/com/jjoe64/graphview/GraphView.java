@@ -92,13 +92,15 @@ abstract public class GraphView extends LinearLayout {
 				paint.setColor(Color.DKGRAY);
 				float x = ((graphwidth / hors) * i) + horstart;
 				canvas.drawLine(x, height - border, x, border, paint);
-				paint.setTextAlign(Align.CENTER);
-				if (i==horlabels.length-1)
-					paint.setTextAlign(Align.RIGHT);
-				if (i==0)
-					paint.setTextAlign(Align.LEFT);
-				paint.setColor(Color.WHITE);
-				canvas.drawText(horlabels[i], x, height - 4, paint);
+				if (showHorLabels) {
+					paint.setTextAlign(Align.CENTER);
+					if (i==horlabels.length-1)
+						paint.setTextAlign(Align.RIGHT);
+					if (i==0)
+						paint.setTextAlign(Align.LEFT);
+					paint.setColor(Color.WHITE);
+					canvas.drawText(horlabels[i], x, height - 4, paint);
+				}
 			}
 
 			paint.setTextAlign(Align.CENTER);
@@ -287,6 +289,7 @@ abstract public class GraphView extends LinearLayout {
 	private boolean manualYAxis;
 	private double manualMaxYValue;
 	private double manualMinYValue;
+	private boolean showHorLabels = true;
 
 	/**
 	 *
@@ -308,6 +311,21 @@ abstract public class GraphView extends LinearLayout {
 		viewVerLabels = new VerLabelsView(context);
 		addView(viewVerLabels);
 		addView(new GraphViewContentView(context), new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1));
+	}
+	
+	//TODO: Update this to disable all drawing steps of this...
+	public void showVerticalLabels(boolean show) {
+		if (!show) {
+			removeView(viewVerLabels);
+		} else {
+			removeView(viewVerLabels);
+			addView(viewVerLabels);
+		}
+	}
+	
+	public void showHorizontalLabels(boolean show) {
+		showHorLabels = show;
+		invalidate();
 	}
 
 	private GraphViewData[] _values(int idxSeries) {
